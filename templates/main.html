@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User list</title>
+
+    {% block scripts %}
+        <script>
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        var csrftoken = getCookie('csrftoken');
+
+
+        function putUser(elem) {
+
+        var uname = document.getElementById('ID').value;
+        var uage = parseInt(document.getElementById('PWD').value);
+        console.log(uage)
+        var data = { id: 0, name:uname, pwd: uage }
+        console.log(data)
+
+        var jsonstr = JSON.stringify(data);
+
+        
+        xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4) {
+                var data = xhr.responseText;
+                var obj = JSON.parse(data);
+            }
+        };
+
+        xhr.open("PUT", "/users");
+        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        xhr.setRequestHeader("Content-Type","application/json")
+        xhr.send(jsonstr);
+    
+
+        }
+
+        function test(elem) {
+            var uname = document.getElementById('ID').value;
+            var uage = parseInt(document.getElementById('PWD').value);
+
+            var data = { id: 0, name:uname, pwd: uage }
+            var jsonstr = JSON.stringify(data);
+
+            conlose.log(jsonstr)
+
+            xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4) {
+                    var data = xhr.responseText;
+                    var obj = JSON.parse(data);
+                }
+            };
+
+
+            xhr.open("PUT", "/users");
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            xhr.setRequestHeader("Content-Type","application/json")
+            xhr.send(jsonstr);
+
+        }
+
+    </script>
+
+{% endblock %}
+
+</head>
+<body>
+
+    <div style="padding:10px;">
+        <a href="/">HOME</a>
+        <a href="/users">유저 정보</a>
+        <a href="/ChargeBox">충전소 정보</a>
+        <a href="/Server_Admin">서버 정보</a>
+        <a href="/transactions">연결 상태</a>
+        <a href="/chargepoint">Charge Point</a>
+
+    </div>
+    <form action="" onsubmit="putUser(this)">
+        <input type="text" id="ID" value=LJH />
+        <input type="text" id="PWD" value=21312 />
+        <button>Send</button>
+    </form>
+
+    <form action="" onsubmit="test(this)">
+        <input type="text" id="ID" value=LJH />
+        <input type="text" id="PWD" value=123 />
+        <button>Send</button>
+    </form>
+</body>
+</html>

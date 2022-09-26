@@ -7,7 +7,7 @@ from sqlalchemy.orm import sessionmaker, scoped_session
 user_name = "root"
 user_pwd = "knv1234"
 db_host = "127.0.0.1"
-db_name = "knvdb"
+db_name = "ljh"
 
 DATABASE = 'mysql://%s:%s@%s/%s?charset=utf8' % (
     user_name,
